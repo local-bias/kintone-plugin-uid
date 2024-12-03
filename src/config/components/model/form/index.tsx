@@ -79,6 +79,20 @@ const FormContent: FC = () => {
 
           <PluginFormSection>
             <h3 className='text-base font-bold'>
+              {t('config.condition.idRegenerateButtonLabel.title')}
+            </h3>
+            <PluginFormDescription last>
+              {t('config.condition.idRegenerateButtonLabel.description')}
+            </PluginFormDescription>
+            <JotaiText
+              atom={getConditionPropertyAtom('idRegenerateButtonLabel')}
+              label={t('config.condition.idRegenerateButtonLabel.label')}
+              placeholder={t('config.condition.idRegenerateButtonLabel.placeholder')}
+            />
+          </PluginFormSection>
+
+          <PluginFormSection>
+            <h3 className='text-base font-bold'>
               {t('config.condition.idRegenerateButtonShownEvents.title')}
             </h3>
             <PluginFormDescription last>

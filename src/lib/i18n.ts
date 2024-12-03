@@ -28,6 +28,12 @@ export const ui = {
       '指定したスペースフィールドに、ID再生成ボタンを表示することができます',
     'config.condition.isIDRegenerateButtonShown.label': 'ID再生成ボタンを表示する',
 
+    'config.condition.idRegenerateButtonLabel.title': 'ID再生成ボタンのラベル',
+    'config.condition.idRegenerateButtonLabel.description': 'ID再生成ボタンのラベルを設定します',
+    'config.condition.idRegenerateButtonLabel.label': 'ラベル',
+    'config.condition.idRegenerateButtonLabel.placeholder': '再生成',
+    'config.condition.idRegenerateButtonLabel.default': '再生成',
+
     'config.condition.idRegenerateButtonSpaceId.title': 'ID再生成ボタンのスペースフィールド',
     'config.condition.idRegenerateButtonSpaceId.description':
       'ID再生成ボタンを表示するスペースフィールドを指定します',

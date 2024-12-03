@@ -2,6 +2,7 @@ import { restorePluginConfig as restore } from '@konomi-app/kintone-utilities';
 import { nanoid } from 'nanoid';
 import { z } from 'zod';
 import { isProd, PLUGIN_ID } from './global';
+import { t } from './i18n';
 
 const CustomRuleBaseSchema = z.object({
   id: z.string(),
@@ -39,6 +40,10 @@ export const PluginConditionV1Schema = z.object({
    * ID再生成ボタンを表示するスペースID
    */
   idRegenerateButtonSpaceId: z.string(),
+  /**
+   * ID再生成ボタンのラベル
+   */
+  idRegenerateButtonLabel: z.string(),
   /**
    * ID再生成ボタンを表示するイベント
    */
@@ -121,11 +126,13 @@ export const getNewCondition = (): PluginCondition => ({
   isFieldDisabled: true,
   mode: 'nanoid',
   isIDRegenerateButtonShown: false,
-  isIDRegeneratedOnRecordReuse: true,
+  idRegenerateButtonSpaceId: '',
+  idRegenerateButtonLabel: t('config.condition.idRegenerateButtonLabel.default'),
   idRegenerateButtonShownEvents: {
     create: true,
     update: false,
   },
+  isIDRegeneratedOnRecordReuse: true,
   customIDRules: [
     {
       id: nanoid(),
