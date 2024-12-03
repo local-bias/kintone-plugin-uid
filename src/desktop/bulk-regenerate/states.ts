@@ -7,3 +7,5 @@ export const dialogStepAtom = atom(0);
 export const recordsAtom = atom<kintoneAPI.RecordData[]>([]);
 
 export const processedRecordsLengthAtom = atom(0);
+
+export const errorMessageAtom = atom<string | null>(null);

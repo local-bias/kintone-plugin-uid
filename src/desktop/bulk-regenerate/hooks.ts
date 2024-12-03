@@ -12,6 +12,7 @@ import { useCallback } from 'react';
 import { currentAppIdAtom, loadingCountAtom } from '../public-state';
 import {
   dialogStepAtom,
+  errorMessageAtom,
   isDialogOpenAtom,
   processedRecordsLengthAtom,
   recordsAtom,
@@ -42,6 +43,12 @@ export const useBulkRegenerate = (condition: PluginCondition) => {
             guestSpaceId: GUEST_SPACE_ID,
             debug: !isProd,
           });
+        } catch (error) {
+          if (error instanceof Error) {
+            set(errorMessageAtom, error.message);
+          } else {
+            set(errorMessageAtom, '不明なエラーが発生しました');
+          }
         } finally {
           set(loadingCountAtom, (c) => c - 1);
         }
@@ -58,6 +65,7 @@ export const useOpenDialog = () => {
     useCallback(
       async (get, set) => {
         try {
+          set(errorMessageAtom, null);
           set(dialogStepAtom, 0);
           set(loadingCountAtom, (c) => c + 1);
           set(isDialogOpenAtom, true);
@@ -74,6 +82,12 @@ export const useOpenDialog = () => {
             debug: !isProd,
           });
           set(recordsAtom, records);
+        } catch (error) {
+          if (error instanceof Error) {
+            set(errorMessageAtom, error.message);
+          } else {
+            set(errorMessageAtom, '不明なエラーが発生しました');
+          }
         } finally {
           set(loadingCountAtom, (c) => c - 1);
         }
