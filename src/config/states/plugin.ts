@@ -7,14 +7,16 @@ import {
 import { produce } from 'immer';
 import { atom, PrimitiveAtom } from 'jotai';
 import { focusAtom } from 'jotai-optics';
-import { atomWithReset } from 'jotai/utils';
+import { atomWithDefault } from 'jotai/utils';
 
 export const pluginConfigAtom = atom<PluginConfig>(restorePluginConfig());
 export const loadingAtom = atom(false);
 export const conditionsAtom = focusAtom(pluginConfigAtom, (s) => s.prop('conditions'));
 export const conditionsLengthAtom = focusAtom(conditionsAtom, (s) => s.prop('length'));
 export const commonConfigAtom = focusAtom(pluginConfigAtom, (s) => s.prop('common'));
-export const selectedConditionIdAtom = atomWithReset<string | null>(null);
+export const selectedConditionIdAtom = atomWithDefault<string | null>(
+  (get) => get(conditionsAtom)[0]?.id ?? null
+);
 export const commonSettingsShownAtom = atom((get) => get(selectedConditionIdAtom) === null);
 export const selectedConditionAtom = atom(
   (get) => {

@@ -1,6 +1,6 @@
 import { conditionsAtom, selectedConditionIdAtom } from '@/config/states/plugin';
 import { t } from '@/lib/i18n';
-import { getNewCondition, PluginCondition, validatePluginCondition } from '@/lib/plugin';
+import { getNewCondition, PluginCondition, isPluginConditionMet } from '@/lib/plugin';
 import { BundledSidebar } from '@konomi-app/kintone-utilities-react';
 import { useAtom } from 'jotai';
 import { useSnackbar } from 'notistack';
@@ -15,7 +15,7 @@ const Sidebar: FC = () => {
     return (
       <div>
         <div className='text-[11px] text-gray-400'>{`${t('config.sidebar.tab.label')}${index + 1}`}</div>
-        <div>{condition.memo || '未設定'}</div>
+        <div>{condition.fieldCode || '未設定'}</div>
       </div>
     );
   }, []);
@@ -37,7 +37,6 @@ const Sidebar: FC = () => {
       labelComponent={label}
       onSelectedConditionChange={onSelectedConditionChange}
       selectedConditionId={selectedConditionId}
-      commonTab
       onConditionDelete={onConditionDelete}
       context={{
         onCopy: () => {
@@ -50,7 +49,7 @@ const Sidebar: FC = () => {
         },
         onPasteValidation: (condition) => {
           try {
-            validatePluginCondition(condition);
+            isPluginConditionMet(condition);
           } catch (error) {
             return false;
           }

@@ -9,16 +9,11 @@ import {
 import { FC } from 'react';
 
 const Component: FC = () => (
-  <div className='p-4'>
-    <PluginFormSection>
-      <PluginFormTitle>{t('config.condition.memo.title')}</PluginFormTitle>
-      <PluginFormDescription last>{t('config.common.memo.description')}</PluginFormDescription>
-      <JotaiText
-        atom={getCommonPropertyAtom('memo')}
-        label={t('config.common.memo.label')}
-        placeholder={t('config.common.memo.placeholder')}
-      />
-    </PluginFormSection>
+  <div className=''>
+    <iframe
+      src='http://localhost:4321/kintone-plugin/common-config'
+      className='w-full h-[720px] border-0'
+    ></iframe>
   </div>
 );
 

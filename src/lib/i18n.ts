@@ -6,23 +6,59 @@ export const ui = {
   ja: {
     'error.config.root':
       'プラグインのHTMLに、ルート要素が存在しません。プラグイン設定をレンダリングするためには、id="settings"の要素が必要です。',
-    'config.common.memo.title': 'メモ(共通)',
-    'config.common.memo.description':
-      'プラグインの共通設定です。個別設定全てに適用する必要がある項目がある場合に使用します。',
-    'config.common.memo.label': '📝 メモ(共通)',
-    'config.common.memo.placeholder': 'テキストを入力',
 
-    'config.condition.memo.title': 'メモ',
-    'config.condition.memo.description':
-      'この設定はサンプルです。プラグインにテキスト情報を保存することができます。',
-    'config.condition.memo.label': '📝 メモ',
-    'config.condition.memo.placeholder': 'テキストを入力',
-    'config.condition.field.title': '対象フィールド',
-    'config.condition.field.description':
-      'この設定はサンプルです。このアプリの設定情報から、フィールド一覧を取得して表示しています。',
-    'config.condition.isSampleUIShown.title': 'スイッチのサンプル',
-    'config.condition.isSampleUIShown.description':
-      '有効・無効などを切り替えるスイッチのサンプルです。ここでは、レコード一覧にサンプルのUIを表示するかどうかを切り替えています。',
+    'config.condition.fieldCode.title': '対象フィールド',
+    'config.condition.fieldCode.description': 'IDを生成するフィールドを指定してください',
+    'config.condition.fieldCode.label': '対象フィールド',
+    'config.condition.fieldCode.placeholder': 'フィールドを選択',
+
+    'config.condition.isFieldDisabled.title': 'フィールドの編集可否',
+    'config.condition.isFieldDisabled.description':
+      '指定したフィールドの編集可否を設定します。スイッチがオンの場合、ユーザーによってフィールドが編集できなくなります',
+    'config.condition.isFieldDisabled.label': 'フィールドを編集不可にする',
+
+    'config.condition.mode.title': 'ID生成モード',
+    'config.condition.mode.description':
+      '作成するIDの生成モードを選択します。主要な生成アルゴリズムに加えて、独自のルールを設定することもできます。',
+    'config.condition.mode.label': '生成モード',
+    'config.condition.mode.placeholder': '生成モードを選択',
+
+    'config.condition.isIDRegenerateButtonShown.title': 'ID再生成ボタンの表示',
+    'config.condition.isIDRegenerateButtonShown.description':
+      '指定したスペースフィールドに、ID再生成ボタンを表示することができます',
+    'config.condition.isIDRegenerateButtonShown.label': 'ID再生成ボタンを表示する',
+
+    'config.condition.idRegenerateButtonSpaceId.title': 'ID再生成ボタンのスペースフィールド',
+    'config.condition.idRegenerateButtonSpaceId.description':
+      'ID再生成ボタンを表示するスペースフィールドを指定します',
+    'config.condition.idRegenerateButtonSpaceId.label': 'スペースフィールド',
+
+    'config.condition.idRegenerateButtonShownEvents.title': 'ID再生成ボタンの表示イベント',
+    'config.condition.idRegenerateButtonShownEvents.description':
+      'ID再生成ボタンを表示するイベントを選択します',
+    'config.condition.idRegenerateButtonShownEvents.events.create': 'レコード作成時',
+    'config.condition.idRegenerateButtonShownEvents.events.edit': 'レコード編集時',
+
+    'config.condition.isIDRegeneratedOnRecordReuse.title': 'レコード再利用時のID再生成',
+    'config.condition.isIDRegeneratedOnRecordReuse.description':
+      'レコード再利用時、IDを再生成するか選択します。スイッチがオンの場合、IDを再生成した値で上書きします。スイッチをオフにした場合、再生成は実行されません',
+    'config.condition.isIDRegeneratedOnRecordReuse.label': 'レコード再利用時にIDを再生成する',
+
+    'config.condition.isBulkRegenerateButtonShown.title': 'ID一括再生成ボタンの表示',
+    'config.condition.isBulkRegenerateButtonShown.description':
+      'レコード一覧に、絞り込まれたレコード全てに対してIDを再生成するボタンを表示します',
+    'config.condition.isBulkRegenerateButtonShown.label': 'ID一括再生成ボタンを表示する',
+
+    'config.condition.customIDRules.title': 'カスタムルール',
+    'config.condition.customIDRules.description':
+      'ID生成のカスタムルールを設定します。ID生成モードが「カスタム」の場合のみ有効です',
+    'config.condition.customIDRules.rules.add': 'ルールを追加する',
+    'config.condition.customIDRules.rules.delete': 'このルールを削除する',
+    'config.condition.customIDRules.prefix.label': '手前に表示するテキスト',
+    'config.condition.customIDRules.prefix.placeholder': '-, /, # など',
+    'config.condition.customIDRules.constant.label': '固定値',
+    'config.condition.customIDRules.constant.placeholder': '固定値を入力',
+
     'config.condition.isSampleUIShown.label': 'サンプルUIを表示',
     'config.sidebar.tab.common.label': '共通設定',
     'config.sidebar.tab.label': '設定',

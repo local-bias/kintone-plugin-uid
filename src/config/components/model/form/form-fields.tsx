@@ -1,43 +1,26 @@
 import { JotaiFieldSelect } from '@/components/jotai';
-import { useArray } from '@/config/hooks/use-array';
 import { getConditionPropertyAtom } from '@/config/states/plugin';
-import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { IconButton, Skeleton, Tooltip } from '@mui/material';
-import { useAtomValue } from 'jotai';
-import React, { FC, memo, Suspense } from 'react';
+import { t } from '@/lib/i18n';
+import { Skeleton } from '@mui/material';
+import { useAtom } from 'jotai';
+import { FC, memo, Suspense } from 'react';
 import { appFieldsAtom } from '../../../states/kintone';
 
-const fieldsAtom = getConditionPropertyAtom('fields');
-
 const Component: FC = () => {
-  const fields = useAtomValue(fieldsAtom);
-  const { addItem, deleteItem, updateItem } = useArray(fieldsAtom);
+  const [fieldCode, setFieldCode] = useAtom(getConditionPropertyAtom('fieldCode'));
+
+  const onChange = (code: string) => {
+    setFieldCode(code);
+  };
 
   return (
-    <div className='flex flex-col gap-4'>
-      {fields.map((value, i) => (
-        <div key={i} className='flex items-center gap-2'>
-          <JotaiFieldSelect
-            fieldPropertiesAtom={appFieldsAtom}
-            onChange={(code) => updateItem({ index: i, newItem: code })}
-            fieldCode={value}
-          />
-          <Tooltip title='フィールドを追加する'>
-            <IconButton size='small' onClick={() => addItem({ newItem: '', index: i + 1 })}>
-              <AddIcon fontSize='small' />
-            </IconButton>
-          </Tooltip>
-          {fields.length > 1 && (
-            <Tooltip title='このフィールドを削除する'>
-              <IconButton size='small' onClick={() => deleteItem(i)}>
-                <DeleteIcon fontSize='small' />
-              </IconButton>
-            </Tooltip>
-          )}
-        </div>
-      ))}
-    </div>
+    <JotaiFieldSelect
+      fieldPropertiesAtom={appFieldsAtom}
+      onChange={(code) => onChange(code)}
+      fieldCode={fieldCode}
+      label={t('config.condition.fieldCode.label')}
+      placeholder={t('config.condition.fieldCode.placeholder')}
+    />
   );
 };
 

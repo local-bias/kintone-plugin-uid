@@ -3,22 +3,75 @@ import { nanoid } from 'nanoid';
 import { z } from 'zod';
 import { isProd, PLUGIN_ID } from './global';
 
+const CustomRuleBaseSchema = z.object({
+  id: z.string(),
+  prefix: z.string(),
+});
+
 export const PluginConditionV1Schema = z.object({
   /**
    * プラグイン設定を一意に識別するためのID
    * 設定の並び替えに使用されます
    */
   id: z.string(),
-  memo: z.string(),
-  fields: z.array(z.string()),
-  isSampleUIShown: z.boolean(),
+  /**
+   * IDを生成するフィールドのフィールドコード
+   */
+  fieldCode: z.string(),
+  /**
+   * `true`の場合、対象フィールドを編集不可にします
+   */
+  isFieldDisabled: z.boolean(),
+  /**
+   * 発行する一意のIDの生成方法
+   *
+   * - `nanoid`: [nanoid](https://github.com/ai/nanoid)
+   * - `uuid`: [uuid](https://github.com/uuidjs/uuid)
+   * - `random`: `Math.random().toString(36).slice(2)`
+   * - `custom`: 複数のルールを組み合わせて生成
+   */
+  mode: z.union([z.literal('nanoid'), z.literal('uuid'), z.literal('random'), z.literal('custom')]),
+  /**
+   * `true`の場合、IDの再生成ボタンを表示します
+   */
+  isIDRegenerateButtonShown: z.boolean(),
+  /**
+   * ID再生成ボタンを表示するスペースID
+   */
+  idRegenerateButtonSpaceId: z.string(),
+  /**
+   * ID再生成ボタンを表示するイベント
+   */
+  idRegenerateButtonShownEvents: z.object({
+    create: z.boolean(),
+    update: z.boolean(),
+  }),
+  /**
+   * `true`の場合、レコード再生成時にIDを再生成します
+   */
+  isIDRegeneratedOnRecordReuse: z.boolean(),
+  /**
+   * `true`の場合、レコード一覧にID一括再生成ボタンを表示します
+   */
+  isBulkRegenerateButtonShown: z.boolean(),
+  /**
+   * カスタムID生成ルール
+   */
+  customIDRules: z.array(
+    CustomRuleBaseSchema.merge(z.object({ type: z.literal('nanoid') }))
+      .or(CustomRuleBaseSchema.merge(z.object({ type: z.literal('uuid') })))
+      .or(CustomRuleBaseSchema.merge(z.object({ type: z.literal('random') })))
+      .or(
+        CustomRuleBaseSchema.merge(
+          z.object({ type: z.literal('field_value'), fieldCode: z.string(), format: z.string() })
+        )
+      )
+      .or(CustomRuleBaseSchema.merge(z.object({ type: z.literal('constant'), value: z.string() })))
+  ),
 });
 export const PluginConfigV1Schema = z.object({
   version: z.literal(1),
-  common: z.object({
-    memo: z.string(),
-    fields: z.array(z.string()),
-  }),
+  common: z.object({}),
   conditions: z.array(PluginConditionV1Schema),
 });
 type PluginConfigV1 = z.infer<typeof PluginConfigV1Schema>;
@@ -35,7 +88,13 @@ export type PluginCondition = PluginConfig['conditions'][number];
 /** 🔌 過去全てのバージョンを含むプラグインの設定情報 */
 type AnyPluginConfig = PluginConfigV1; // | PluginConfigV2 | ...;
 
-export const validatePluginCondition = (condition: unknown): boolean => {
+/**
+ * プラグインの設定情報が、最新の設定情報の形式に準拠しているか検証します
+ *
+ * @param condition - 検証する条件オブジェクト
+ * @returns プラグインの設定情報が最新の形式に準拠している場合は`true`、そうでない場合は`false`
+ */
+export const isPluginConditionMet = (condition: unknown): boolean => {
   try {
     PluginConditionV1Schema.parse(condition);
     return true;
@@ -44,11 +103,37 @@ export const validatePluginCondition = (condition: unknown): boolean => {
   }
 };
 
+/**
+ * プラグインの設定情報が、プラグインの利用条件を満たしているか検証します
+ *
+ * この条件を満たさない場合、設定情報は無効となります。
+ *
+ * @param condition - 検証する条件オブジェクト
+ * @returns プラグインの設定情報が利用条件を満たしている場合は`true`、そうでない場合は`false`
+ */
+export const isUsagePluginConditionMet = (condition: PluginCondition) => {
+  return !!condition.fieldCode;
+};
+
 export const getNewCondition = (): PluginCondition => ({
   id: nanoid(),
-  memo: '',
-  fields: [''],
-  isSampleUIShown: true,
+  fieldCode: '',
+  isFieldDisabled: true,
+  mode: 'nanoid',
+  isIDRegenerateButtonShown: false,
+  isIDRegeneratedOnRecordReuse: true,
+  idRegenerateButtonShownEvents: {
+    create: true,
+    update: false,
+  },
+  customIDRules: [
+    {
+      id: nanoid(),
+      type: 'nanoid',
+      prefix: '',
+    },
+  ],
+  isBulkRegenerateButtonShown: false,
 });
 
 /**
@@ -56,10 +141,7 @@ export const getNewCondition = (): PluginCondition => ({
  */
 export const createConfig = (): PluginConfig => ({
   version: 1,
-  common: {
-    memo: '',
-    fields: [],
-  },
+  common: {},
   conditions: [getNewCondition()],
 });
 

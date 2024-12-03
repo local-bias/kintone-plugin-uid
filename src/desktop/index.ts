@@ -6,5 +6,8 @@
 */
 
 import '@/lib/global';
-import './event';
+import './lock-field';
+import './numbering';
+import './bulk-regenerate';
+
 import './debug';
