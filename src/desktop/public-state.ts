@@ -1,6 +1,12 @@
 import { GUEST_SPACE_ID } from '@/lib/global';
 import { isUsagePluginConditionMet, restorePluginConfig } from '@/lib/plugin';
-import { getAppId, getFormFields, kintoneAPI } from '@konomi-app/kintone-utilities';
+import {
+  getAppId,
+  getCybozuUserGroups,
+  getCybozuUserOrganizations,
+  getFormFields,
+  kintoneAPI,
+} from '@konomi-app/kintone-utilities';
 import { atom } from 'jotai';
 import { focusAtom } from 'jotai-optics';
 
@@ -31,4 +37,20 @@ export const currentAppFieldsAtom = atom<Promise<kintoneAPI.FieldProperty[]>>(as
 
   const values = Object.values(properties);
   return values.sort((a, b) => a.label.localeCompare(b.label, 'ja'));
+});
+
+export const loginUserAtom = atom(() => kintone.getLoginUser());
+
+export const cybozuUserCodeAtom = atom<string>((get) => get(loginUserAtom).code ?? '');
+
+export const cybozuUserGroupsAtom = atom<Promise<cybozu.api.Group[]>>(async (get) => {
+  const code = get(cybozuUserCodeAtom);
+  const { groups } = await getCybozuUserGroups(code);
+  return groups;
+});
+
+export const cybozuUserOrganizationsAtom = atom<Promise<cybozu.api.Organization[]>>(async (get) => {
+  const code = get(cybozuUserCodeAtom);
+  const { organizations } = await getCybozuUserOrganizations(code);
+  return organizations;
 });

@@ -55,6 +55,16 @@ export const ui = {
       'レコード一覧に、絞り込まれたレコード全てに対してIDを再生成するボタンを表示します',
     'config.condition.isBulkRegenerateButtonShown.label': 'ID一括再生成ボタンを表示する',
 
+    'config.condition.isBulkRegenerateButtonLimited.title': 'ID一括再生成ボタンの制限',
+    'config.condition.isBulkRegenerateButtonLimited.description':
+      'ID一括再生成ボタンの使用を制限します。スイッチがオンの場合、特定のユーザーのみがボタンを使用できます',
+    'config.condition.isBulkRegenerateButtonLimited.label': 'ID一括再生成ボタンの使用を制限する',
+
+    'config.condition.bulkRegenerateButtonShownUsers.title': 'ID一括再生成ボタンの対象ユーザー',
+    'config.condition.bulkRegenerateButtonShownUsers.description':
+      'ID一括再生成ボタンを表示するユーザーを指定します。指定したユーザーのみにボタンが表示され、使用することができます',
+    'config.condition.bulkRegenerateButtonShownUsers.label': 'ID一括再生成ボタンの対象ユーザー',
+
     'config.condition.customIDRules.title': 'カスタムルール',
     'config.condition.customIDRules.description':
       'ID生成のカスタムルールを設定します。ID生成モードが「カスタム」の場合のみ有効です',

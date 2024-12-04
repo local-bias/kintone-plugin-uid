@@ -16,6 +16,7 @@ import IdRegenerateButtonShownEventsForm from './form-id-regenerate-button-shown
 import CustomIDRulesForm from './form-custom-rules';
 import IdRegenerateButtonSpaceIdForm from './form-id-regenerate-button-space-id';
 import { JotaiTogglePanel } from '@konomi-app/kintone-utilities-jotai';
+import BulkRegenerateButtonShownUsersForm from './form-bulk-regenerate-button-shown-users';
 
 const FormContent: FC = () => {
   return (
@@ -123,6 +124,39 @@ const FormContent: FC = () => {
           atom={getConditionPropertyAtom('isBulkRegenerateButtonShown')}
           label={t('config.condition.isBulkRegenerateButtonShown.label')}
         />
+
+        <JotaiTogglePanel
+          className='px-4 py-2 ml-4 mt-2 border-l'
+          atom={getConditionPropertyAtom('isBulkRegenerateButtonShown')}
+        >
+          <PluginFormSection>
+            <h3 className='text-base font-bold'>
+              {t('config.condition.isBulkRegenerateButtonLimited.title')}
+            </h3>
+            <PluginFormDescription last>
+              {t('config.condition.isBulkRegenerateButtonLimited.description')}
+            </PluginFormDescription>
+            <JotaiSwitch
+              atom={getConditionPropertyAtom('isBulkRegenerateButtonLimited')}
+              label={t('config.condition.isBulkRegenerateButtonLimited.label')}
+            />
+
+            <JotaiTogglePanel
+              className='px-4 py-2 ml-4 mt-2 border-l'
+              atom={getConditionPropertyAtom('isBulkRegenerateButtonLimited')}
+            >
+              <PluginFormSection>
+                <h3 className='text-base font-bold'>
+                  {t('config.condition.bulkRegenerateButtonShownUsers.title')}
+                </h3>
+                <PluginFormDescription last>
+                  {t('config.condition.bulkRegenerateButtonShownUsers.description')}
+                </PluginFormDescription>
+                <BulkRegenerateButtonShownUsersForm />
+              </PluginFormSection>
+            </JotaiTogglePanel>
+          </PluginFormSection>
+        </JotaiTogglePanel>
       </PluginFormSection>
 
       <DeleteButton />

@@ -60,6 +60,19 @@ export const PluginConditionV1Schema = z.object({
    */
   isBulkRegenerateButtonShown: z.boolean(),
   /**
+   * `true`の場合、ID一括再作成ボタンを使用できるユーザーを限定します
+   */
+  isBulkRegenerateButtonLimited: z.boolean(),
+  /**
+   * ID一括再作成ボタンを表示するユーザー
+   */
+  bulkRegenerateButtonShownUsers: z.array(
+    z.object({
+      type: z.union([z.literal('user'), z.literal('group'), z.literal('organization')]),
+      code: z.string(),
+    })
+  ),
+  /**
    * カスタムID生成ルール
    */
   customIDRules: z.array(
@@ -141,6 +154,13 @@ export const getNewCondition = (): PluginCondition => ({
     },
   ],
   isBulkRegenerateButtonShown: false,
+  isBulkRegenerateButtonLimited: false,
+  bulkRegenerateButtonShownUsers: [
+    {
+      type: 'user',
+      code: '',
+    },
+  ],
 });
 
 /**
