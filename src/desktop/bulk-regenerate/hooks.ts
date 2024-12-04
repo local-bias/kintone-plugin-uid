@@ -1,5 +1,4 @@
 import { GUEST_SPACE_ID, isProd } from '@/lib/global';
-import { PluginCondition } from '@/lib/plugin';
 import { getId } from '@/lib/utils';
 import {
   getAllRecords,
@@ -10,6 +9,7 @@ import {
 import { useAtomCallback } from 'jotai/utils';
 import { useCallback } from 'react';
 import { currentAppIdAtom, loadingCountAtom } from '../public-state';
+import { useCondition } from './components/condition-context';
 import {
   dialogStepAtom,
   errorMessageAtom,
@@ -17,7 +17,6 @@ import {
   processedRecordsLengthAtom,
   recordsAtom,
 } from './states';
-import { useCondition } from './components/condition-context';
 
 export const useOpenDialog = () => {
   const { condition } = useCondition();
