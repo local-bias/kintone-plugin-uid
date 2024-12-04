@@ -8,11 +8,13 @@ import { dialogStepAtom, isDialogOpenAtom } from '../states';
 import { DialogContentStep0 } from './dialog-content-step0';
 import { DialogContentStep1 } from './dialog-content-step1';
 import { FieldName } from './field-name';
+import { useCondition } from './condition-context';
 
 const Component: FC = () => {
+  const { condition } = useCondition();
   const loading = useAtomValue(loadingAtom);
-  const [step, setStep] = useAtom(dialogStepAtom);
-  const [isDialogOpen, setIsDialogOpen] = useAtom(isDialogOpenAtom);
+  const [step, setStep] = useAtom(dialogStepAtom(condition.id));
+  const [isDialogOpen, setIsDialogOpen] = useAtom(isDialogOpenAtom(condition.id));
   const onNext = useOnNext();
 
   const canClose = !loading;

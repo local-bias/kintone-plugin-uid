@@ -24,6 +24,16 @@ export const appFieldsAtom = atom<Promise<kintoneAPI.FieldProperty[]>>(async (ge
   return values.sort((a, b) => a.label.localeCompare(b.label, 'ja'));
 });
 
+export const currentAppStringFieldsAtom = atom<Promise<kintoneAPI.FieldProperty[]>>(async (get) => {
+  const fields = await get(appFieldsAtom);
+  return fields.filter(
+    (field) =>
+      field.type === 'SINGLE_LINE_TEXT' ||
+      field.type === 'MULTI_LINE_TEXT' ||
+      field.type === 'RICH_TEXT'
+  );
+});
+
 export const currentAppLayoutAtom = atom<Promise<kintoneAPI.Layout>>(async (get) => {
   const app = get(currentAppIdAtom);
 

@@ -19,45 +19,6 @@ import {
 } from './states';
 import { useCondition } from './components/condition-context';
 
-export const useBulkRegenerate = (condition: PluginCondition) => {
-  return useAtomCallback(
-    useCallback(
-      async (get, set) => {
-        try {
-          set(loadingCountAtom, (c) => c + 1);
-          const records = get(recordsAtom);
-          const filtered = records.filter(
-            (record) => !!record.$id?.value && !!record[condition.fieldCode]?.value
-          );
-
-          const newRecords: UpdateAllRecordsParams['records'] = filtered.map((record) => {
-            return {
-              id: record.$id!.value as string,
-              record: { [condition.fieldCode]: { value: getId({ condition, record }) } },
-            };
-          });
-
-          await updateAllRecords({
-            app: get(currentAppIdAtom),
-            records: newRecords,
-            guestSpaceId: GUEST_SPACE_ID,
-            debug: !isProd,
-          });
-        } catch (error) {
-          if (error instanceof Error) {
-            set(errorMessageAtom, error.message);
-          } else {
-            set(errorMessageAtom, '不明なエラーが発生しました');
-          }
-        } finally {
-          set(loadingCountAtom, (c) => c - 1);
-        }
-      },
-      [condition]
-    )
-  );
-};
-
 export const useOpenDialog = () => {
   const { condition } = useCondition();
 
@@ -65,10 +26,10 @@ export const useOpenDialog = () => {
     useCallback(
       async (get, set) => {
         try {
-          set(errorMessageAtom, null);
-          set(dialogStepAtom, 0);
+          set(errorMessageAtom(condition.id), null);
+          set(dialogStepAtom(condition.id), 0);
           set(loadingCountAtom, (c) => c + 1);
-          set(isDialogOpenAtom, true);
+          set(isDialogOpenAtom(condition.id), true);
 
           const query = getQueryCondition() ?? '';
 
@@ -81,12 +42,12 @@ export const useOpenDialog = () => {
             guestSpaceId: GUEST_SPACE_ID,
             debug: !isProd,
           });
-          set(recordsAtom, records);
+          set(recordsAtom(condition.id), records);
         } catch (error) {
           if (error instanceof Error) {
-            set(errorMessageAtom, error.message);
+            set(errorMessageAtom(condition.id), error.message);
           } else {
-            set(errorMessageAtom, '不明なエラーが発生しました');
+            set(errorMessageAtom(condition.id), '不明なエラーが発生しました');
           }
         } finally {
           set(loadingCountAtom, (c) => c - 1);
@@ -106,11 +67,12 @@ export const useOnNext = () => {
         try {
           set(loadingCountAtom, (c) => c + 1);
 
-          const step = get(dialogStepAtom);
+          const step = get(dialogStepAtom(condition.id));
 
           switch (step) {
             case 0: {
-              const records = get(recordsAtom);
+              set(dialogStepAtom(condition.id), (s) => s + 1);
+              const records = get(recordsAtom(condition.id));
               const filtered = records.filter(
                 (record) => !!record.$id?.value && record[condition.fieldCode]?.value !== undefined
               );
@@ -128,17 +90,16 @@ export const useOnNext = () => {
                 guestSpaceId: GUEST_SPACE_ID,
                 debug: !isProd,
                 onProgress: ({ done }) => {
-                  set(processedRecordsLengthAtom, done);
+                  set(processedRecordsLengthAtom(condition.id), done);
                 },
               });
               break;
             }
             case 1: {
-              set(isDialogOpenAtom, false);
+              set(isDialogOpenAtom(condition.id), false);
               break;
             }
           }
-          set(dialogStepAtom, (s) => s + 1);
         } finally {
           set(loadingCountAtom, (c) => c - 1);
         }

@@ -3,11 +3,13 @@ import { CheckAnimation, LoaderWithLabel } from '@konomi-app/ui-react';
 import { useAtomValue } from 'jotai';
 import { type FC } from 'react';
 import { errorMessageAtom, recordsAtom } from '../states';
+import { useCondition } from './condition-context';
 
 export const DialogContentStep1: FC = () => {
+  const { condition } = useCondition();
   const loading = useAtomValue(loadingAtom);
-  const records = useAtomValue(recordsAtom);
-  const errorMessage = useAtomValue(errorMessageAtom);
+  const records = useAtomValue(recordsAtom(condition.id));
+  const errorMessage = useAtomValue(errorMessageAtom(condition.id));
 
   if (loading) {
     return <LoaderWithLabel label='レコードを更新しています' />;

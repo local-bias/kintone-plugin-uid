@@ -113,20 +113,24 @@ const Component: FC = () => {
   );
 };
 
+const conditionModeAtom = getConditionPropertyAtom('mode');
+
 const CustomIDRulesForm: FC = () => {
-  const mode = useAtomValue(getConditionPropertyAtom('mode'));
+  const mode = useAtomValue(conditionModeAtom);
 
   if (mode !== 'custom') {
     return null;
   }
   return (
-    <PluginFormSection>
-      <PluginFormTitle>{t('config.condition.customIDRules.title')}</PluginFormTitle>
-      <PluginFormDescription last>
-        {t('config.condition.customIDRules.description')}
-      </PluginFormDescription>
-      <Component />
-    </PluginFormSection>
+    <div className='px-4 py-2 ml-4 mt-2 border-l'>
+      <PluginFormSection>
+        <h3 className='text-base font-bold'>{t('config.condition.customIDRules.title')}</h3>
+        <PluginFormDescription last>
+          {t('config.condition.customIDRules.description')}
+        </PluginFormDescription>
+        <Component />
+      </PluginFormSection>
+    </div>
   );
 };
 

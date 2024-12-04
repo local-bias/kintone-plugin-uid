@@ -35,7 +35,7 @@
     "immer": "^10.1.1",
     "jotai": "^2.10.3",
     "jotai-optics": "^0.4.0",
-    "lucide-react": "^0.462.0",
+    "lucide-react": "^0.464.0",
     "luxon": "^3.5.0",
     "nanoid": "^5.0.9",
     "notistack": "^3.0.1",
@@ -57,8 +57,8 @@
     "@types/react-dom": "^18.3.1",
     "@uiw/react-json-view": "^2.0.0-alpha.30",
     "concurrently": "^9.1.0",
-    "dotenv": "^16.4.6",
-    "tailwindcss": "^3.4.15",
+    "dotenv": "^16.4.7",
+    "tailwindcss": "^3.4.16",
     "typescript": "^5.7.2"
   },
   "prettier": "@konomi-app/prettier-config"

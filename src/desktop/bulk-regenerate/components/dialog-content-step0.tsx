@@ -4,11 +4,13 @@ import { useAtomValue } from 'jotai';
 import { type FC } from 'react';
 import { errorMessageAtom, recordsAtom } from '../states';
 import { FieldName } from './field-name';
+import { useCondition } from './condition-context';
 
 export const DialogContentStep0: FC = () => {
+  const { condition } = useCondition();
   const loading = useAtomValue(loadingAtom);
-  const records = useAtomValue(recordsAtom);
-  const errorMessage = useAtomValue(errorMessageAtom);
+  const records = useAtomValue(recordsAtom(condition.id));
+  const errorMessage = useAtomValue(errorMessageAtom(condition.id));
 
   if (loading) {
     return <LoaderWithLabel label='対象レコードを取得しています' />;

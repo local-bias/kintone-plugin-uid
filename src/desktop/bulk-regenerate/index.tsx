@@ -1,6 +1,7 @@
 import { manager } from '@/lib/event-manager';
 import { isProd } from '@/lib/global';
 import { store } from '@/lib/store';
+import { css } from '@emotion/css';
 import { getHeaderSpace } from '@konomi-app/kintone-utilities';
 import { ComponentManager } from '@konomi-app/kintone-utilities-react';
 import { validPluginConditionsAtom } from '../public-state';
@@ -24,6 +25,12 @@ manager.add(['app.record.index.show'], async (event) => {
       id: condition.id,
       component: <App condition={condition} />,
       parentElement: headerElement,
+      onRootElementReady: (element) => {
+        element.classList.add(css`
+          display: inline-block;
+          margin: 0 4px;
+        `);
+      },
     });
   }
 

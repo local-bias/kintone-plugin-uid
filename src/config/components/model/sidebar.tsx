@@ -1,24 +1,35 @@
+import { appFieldsAtom } from '@/config/states/kintone';
 import { conditionsAtom, selectedConditionIdAtom } from '@/config/states/plugin';
-import { t } from '@/lib/i18n';
-import { getNewCondition, PluginCondition, isPluginConditionMet } from '@/lib/plugin';
+import { getNewCondition, isPluginConditionMet, PluginCondition } from '@/lib/plugin';
 import { BundledSidebar } from '@konomi-app/kintone-utilities-react';
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import { useSnackbar } from 'notistack';
-import { FC, useCallback } from 'react';
+import { FC, Suspense } from 'react';
+
+const AwaitedLabel: FC<{ condition: PluginCondition }> = ({ condition }) => {
+  const views = useAtomValue(appFieldsAtom);
+  const found = views.find((view) => view.code === condition.fieldCode);
+  return <>{`${(found?.label ?? condition.fieldCode) || '未設定'}`}</>;
+};
+
+const Label: FC<{ condition: PluginCondition; index: number }> = ({ condition, index }) => {
+  return (
+    <div>
+      <div className='text-[11px] leading-4 text-gray-400'>設定{index + 1}</div>
+      <div className='text-sm text-gray-600'>
+        <Suspense fallback={<>{condition.fieldCode}</>}>
+          <AwaitedLabel condition={condition} />
+        </Suspense>
+      </div>
+    </div>
+  );
+};
 
 const Sidebar: FC = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [conditions, setConditions] = useAtom(conditionsAtom);
   const [selectedConditionId, setSelectedConditionId] = useAtom(selectedConditionIdAtom);
-  const label = useCallback((params: { condition: PluginCondition; index: number }) => {
-    const { condition, index } = params;
-    return (
-      <div>
-        <div className='text-[11px] text-gray-400'>{`${t('config.sidebar.tab.label')}${index + 1}`}</div>
-        <div>{condition.fieldCode || '未設定'}</div>
-      </div>
-    );
-  }, []);
+  const label = (params: { condition: PluginCondition; index: number }) => <Label {...params} />;
 
   const onSelectedConditionChange = (condition: PluginCondition | null) => {
     setSelectedConditionId(condition?.id ?? null);

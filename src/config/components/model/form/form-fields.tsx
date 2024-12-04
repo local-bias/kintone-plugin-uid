@@ -4,10 +4,12 @@ import { t } from '@/lib/i18n';
 import { Skeleton } from '@mui/material';
 import { useAtom } from 'jotai';
 import { FC, memo, Suspense } from 'react';
-import { appFieldsAtom } from '../../../states/kintone';
+import { currentAppStringFieldsAtom } from '../../../states/kintone';
+
+const conditionPropertyAtom = getConditionPropertyAtom('fieldCode');
 
 const Component: FC = () => {
-  const [fieldCode, setFieldCode] = useAtom(getConditionPropertyAtom('fieldCode'));
+  const [fieldCode, setFieldCode] = useAtom(conditionPropertyAtom);
 
   const onChange = (code: string) => {
     setFieldCode(code);
@@ -15,7 +17,7 @@ const Component: FC = () => {
 
   return (
     <JotaiFieldSelect
-      fieldPropertiesAtom={appFieldsAtom}
+      fieldPropertiesAtom={currentAppStringFieldsAtom}
       onChange={(code) => onChange(code)}
       fieldCode={fieldCode}
       label={t('config.condition.fieldCode.label')}

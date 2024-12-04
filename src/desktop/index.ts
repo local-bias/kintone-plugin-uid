@@ -9,5 +9,6 @@ import '@/lib/global';
 import './lock-field';
 import './numbering';
 import './bulk-regenerate';
+import './regenerate-button';
 
 import './debug';
