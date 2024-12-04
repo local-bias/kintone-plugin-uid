@@ -19,7 +19,7 @@ export const ui = {
 
     'config.condition.mode.title': 'ID生成モード',
     'config.condition.mode.description':
-      '作成するIDの生成モードを選択します。主要な生成アルゴリズムに加えて、独自のルールを設定することもできます。',
+      '作成するIDの生成モードを選択します。主要な生成アルゴリズムに加えて、独自のルールを設定することもできます。「ランダム」は他の生成アルゴリズムと比べて、衝突の可能性が高いため注意してください。',
     'config.condition.mode.label': '生成モード',
     'config.condition.mode.placeholder': '生成モードを選択',
 
@@ -64,6 +64,12 @@ export const ui = {
     'config.condition.bulkRegenerateButtonShownUsers.description':
       'ID一括再生成ボタンを表示するユーザーを指定します。指定したユーザーのみにボタンが表示され、使用することができます',
     'config.condition.bulkRegenerateButtonShownUsers.label': 'ID一括再生成ボタンの対象ユーザー',
+
+    'config.condition.preview.title': 'ID生成プレビュー',
+    'config.condition.preview.description':
+      'この設定を有効にした場合に生成されるIDをプレビューできます',
+    'config.condition.preview.label': 'ID(プレビュー)',
+    'config.condition.preview.rerollButton.label': '再生成',
 
     'config.condition.customIDRules.title': 'カスタムルール',
     'config.condition.customIDRules.description':

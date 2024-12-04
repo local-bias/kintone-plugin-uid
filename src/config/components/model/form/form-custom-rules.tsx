@@ -85,11 +85,14 @@ const Component: FC = () => {
               onChange={(e) => updateItem({ index, newItem: { ...rule, value: e.target.value } })}
             />
           )}
+
+          {/* 
+          固定値があれば、prefixは不要          
           <TextField
             label={t('config.condition.customIDRules.prefix.label')}
             value={rule.prefix}
             onChange={(e) => updateItem({ index, newItem: { ...rule, prefix: e.target.value } })}
-          />
+          /> */}
           <Tooltip title={t('config.condition.customIDRules.rules.add')}>
             <IconButton
               size='small'

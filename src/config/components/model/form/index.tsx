@@ -1,6 +1,8 @@
 import { JotaiSwitch, JotaiText } from '@/components/jotai';
+import { JotaiSelect } from '@/components/jotai/select';
 import { commonSettingsShownAtom, getConditionPropertyAtom } from '@/config/states/plugin';
 import { t } from '@/lib/i18n';
+import { JotaiTogglePanel } from '@konomi-app/kintone-utilities-jotai';
 import {
   PluginFormDescription,
   PluginFormSection,
@@ -10,13 +12,12 @@ import { useAtomValue } from 'jotai';
 import { FC } from 'react';
 import CommonSettings from './common';
 import DeleteButton from './condition-delete-button';
-import FieldsForm from './form-fields';
-import { JotaiSelect } from '@/components/jotai/select';
-import IdRegenerateButtonShownEventsForm from './form-id-regenerate-button-shown-events';
-import CustomIDRulesForm from './form-custom-rules';
-import IdRegenerateButtonSpaceIdForm from './form-id-regenerate-button-space-id';
-import { JotaiTogglePanel } from '@konomi-app/kintone-utilities-jotai';
 import BulkRegenerateButtonShownUsersForm from './form-bulk-regenerate-button-shown-users';
+import CustomIDRulesForm from './form-custom-rules';
+import FieldsForm from './form-fields';
+import IdRegenerateButtonShownEventsForm from './form-id-regenerate-button-shown-events';
+import IdRegenerateButtonSpaceIdForm from './form-id-regenerate-button-space-id';
+import Preview from './preview';
 
 const FormContent: FC = () => {
   return (
@@ -157,6 +158,14 @@ const FormContent: FC = () => {
             </JotaiTogglePanel>
           </PluginFormSection>
         </JotaiTogglePanel>
+      </PluginFormSection>
+
+      <PluginFormSection>
+        <PluginFormTitle>{t('config.condition.preview.title')}</PluginFormTitle>
+        <PluginFormDescription last>
+          {t('config.condition.preview.description')}
+        </PluginFormDescription>
+        <Preview />
       </PluginFormSection>
 
       <DeleteButton />
