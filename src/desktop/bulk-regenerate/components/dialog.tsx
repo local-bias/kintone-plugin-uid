@@ -1,14 +1,15 @@
 import { DialogHeader } from '@/components/ui/dialog';
 import { loadingAtom } from '@/desktop/public-state';
+import { t } from '@/lib/i18n';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { useAtom, useAtomValue } from 'jotai';
 import { type FC } from 'react';
 import { useOnNext } from '../hooks';
 import { dialogStepAtom, isDialogOpenAtom } from '../states';
+import { useCondition } from './condition-context';
 import { DialogContentStep0 } from './dialog-content-step0';
 import { DialogContentStep1 } from './dialog-content-step1';
 import { FieldName } from './field-name';
-import { useCondition } from './condition-context';
 
 const Component: FC = () => {
   const { condition } = useCondition();
@@ -38,7 +39,7 @@ const Component: FC = () => {
     <Dialog open={isDialogOpen} onClose={onClose} maxWidth='sm' fullWidth>
       <DialogHeader>
         <DialogTitle>
-          一括再生成: <FieldName />
+          {t('desktop.bulkRegenerate.dialog.title')}: <FieldName />
         </DialogTitle>
       </DialogHeader>
       <DialogContent
@@ -50,10 +51,14 @@ const Component: FC = () => {
       </DialogContent>
       <DialogActions>
         <Button color='inherit' onClick={onPrevious} disabled={loading || !canClose}>
-          {step === 0 ? 'キャンセル' : '戻る'}
+          {step === 0
+            ? t('desktop.bulkRegenerate.dialog.actions.cancel')
+            : t('desktop.bulkRegenerate.dialog.actions.back')}
         </Button>
         <Button color='primary' onClick={onNext} disabled={loading}>
-          {step === 1 ? '閉じる' : '実行'}
+          {step === 1
+            ? t('desktop.bulkRegenerate.dialog.actions.close')
+            : t('desktop.bulkRegenerate.dialog.actions.run')}
         </Button>
       </DialogActions>
     </Dialog>
