@@ -1,6 +1,14 @@
 import { JotaiSwitch, JotaiText } from '@/components/jotai';
 import { JotaiSelect } from '@/components/jotai/select';
-import { commonSettingsShownAtom, getConditionPropertyAtom } from '@/config/states/plugin';
+import {
+  commonSettingsShownAtom,
+  idRegenerateButtonLabelAtom,
+  isBulkRegenerateButtonLimitedAtom,
+  isBulkRegenerateButtonShownAtom,
+  isFieldDisabledAtom,
+  isIDRegenerateButtonShownAtom,
+  modeAtom,
+} from '@/config/states/plugin';
 import { t } from '@/lib/i18n';
 import { JotaiTogglePanel } from '@konomi-app/kintone-utilities-jotai';
 import {
@@ -35,7 +43,7 @@ const FormContent: FC = () => {
           {t('config.condition.isFieldDisabled.description')}
         </PluginFormDescription>
         <JotaiSwitch
-          atom={getConditionPropertyAtom('isFieldDisabled')}
+          atom={isFieldDisabledAtom}
           label={t('config.condition.isFieldDisabled.label')}
         />
       </PluginFormSection>
@@ -44,7 +52,7 @@ const FormContent: FC = () => {
         <PluginFormDescription last>{t('config.condition.mode.description')}</PluginFormDescription>
         <JotaiSelect
           /** @ts-expect-error 型定義不足 */
-          atom={getConditionPropertyAtom('mode')}
+          atom={modeAtom}
           options={[
             { label: 'nanoid', value: 'nanoid' },
             { label: 'uuid', value: 'uuid' },
@@ -62,12 +70,12 @@ const FormContent: FC = () => {
           {t('config.condition.isIDRegenerateButtonShown.description')}
         </PluginFormDescription>
         <JotaiSwitch
-          atom={getConditionPropertyAtom('isIDRegenerateButtonShown')}
+          atom={isIDRegenerateButtonShownAtom}
           label={t('config.condition.isIDRegenerateButtonShown.label')}
         />
         <JotaiTogglePanel
           className='px-4 py-2 ml-4 mt-2 border-l'
-          atom={getConditionPropertyAtom('isIDRegenerateButtonShown')}
+          atom={isIDRegenerateButtonShownAtom}
         >
           <PluginFormSection>
             <h3 className='text-base font-bold'>
@@ -87,7 +95,7 @@ const FormContent: FC = () => {
               {t('config.condition.idRegenerateButtonLabel.description')}
             </PluginFormDescription>
             <JotaiText
-              atom={getConditionPropertyAtom('idRegenerateButtonLabel')}
+              atom={idRegenerateButtonLabelAtom}
               label={t('config.condition.idRegenerateButtonLabel.label')}
               placeholder={t('config.condition.idRegenerateButtonLabel.placeholder')}
             />
@@ -122,13 +130,13 @@ const FormContent: FC = () => {
           {t('config.condition.isBulkRegenerateButtonShown.description')}
         </PluginFormDescription>
         <JotaiSwitch
-          atom={getConditionPropertyAtom('isBulkRegenerateButtonShown')}
+          atom={isBulkRegenerateButtonShownAtom}
           label={t('config.condition.isBulkRegenerateButtonShown.label')}
         />
 
         <JotaiTogglePanel
           className='px-4 py-2 ml-4 mt-2 border-l'
-          atom={getConditionPropertyAtom('isBulkRegenerateButtonShown')}
+          atom={isBulkRegenerateButtonShownAtom}
         >
           <PluginFormSection>
             <h3 className='text-base font-bold'>
@@ -138,13 +146,13 @@ const FormContent: FC = () => {
               {t('config.condition.isBulkRegenerateButtonLimited.description')}
             </PluginFormDescription>
             <JotaiSwitch
-              atom={getConditionPropertyAtom('isBulkRegenerateButtonLimited')}
+              atom={isBulkRegenerateButtonLimitedAtom}
               label={t('config.condition.isBulkRegenerateButtonLimited.label')}
             />
 
             <JotaiTogglePanel
               className='px-4 py-2 ml-4 mt-2 border-l'
-              atom={getConditionPropertyAtom('isBulkRegenerateButtonLimited')}
+              atom={isBulkRegenerateButtonLimitedAtom}
             >
               <PluginFormSection>
                 <h3 className='text-base font-bold'>
