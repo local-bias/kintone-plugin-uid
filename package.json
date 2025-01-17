@@ -36,7 +36,7 @@
     "immer": "^10.1.1",
     "jotai": "^2.11.0",
     "jotai-optics": "^0.4.0",
-    "lucide-react": "^0.471.1",
+    "lucide-react": "^0.473.0",
     "luxon": "^3.5.0",
     "nanoid": "^5.0.9",
     "notistack": "^3.0.1",
