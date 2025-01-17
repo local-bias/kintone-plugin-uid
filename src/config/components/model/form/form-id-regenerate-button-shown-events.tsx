@@ -1,5 +1,5 @@
 import { JotaiCheckbox } from '@/components/jotai/checkbox';
-import { getConditionPropertyAtom } from '@/config/states/plugin';
+import { idRegenerateButtonShownEventsAtom } from '@/config/states/plugin';
 import { t } from '@/lib/i18n';
 import { FC } from 'react';
 
@@ -7,7 +7,7 @@ const Component: FC = () => {
   return (
     <JotaiCheckbox
       /** @ts-expect-error 型定義不足 */
-      atom={getConditionPropertyAtom('idRegenerateButtonShownEvents')}
+      atom={idRegenerateButtonShownEventsAtom}
       options={[
         {
           property: 'create',
