@@ -25,6 +25,10 @@ export const isButtonShownAtom = atomFamily((conditionId: string) =>
       return false;
     }
 
+    if (!condition.isBulkRegenerateButtonLimited) {
+      return true;
+    }
+
     const userCode = get(cybozuUserCodeAtom);
     const userGroups = await get(cybozuUserGroupsAtom);
     const userOrganizations = await get(cybozuUserOrganizationsAtom);
