@@ -42,3 +42,17 @@ export const getCommonPropertyAtom = <T extends keyof PluginCommonConfig>(proper
 
 export const getConditionPropertyAtom = <T extends keyof PluginCondition>(property: T) =>
   focusAtom(selectedConditionAtom, (s) => s.prop(property)) as PrimitiveAtom<PluginCondition[T]>;
+
+export const modeAtom = getConditionPropertyAtom('mode');
+export const isIDRegenerateButtonShownAtom = getConditionPropertyAtom('isIDRegenerateButtonShown');
+export const isFieldDisabledAtom = getConditionPropertyAtom('isFieldDisabled');
+export const idRegenerateButtonLabelAtom = getConditionPropertyAtom('idRegenerateButtonLabel');
+export const idRegenerateButtonShownEventsAtom = getConditionPropertyAtom(
+  'idRegenerateButtonShownEvents'
+);
+export const isBulkRegenerateButtonShownAtom = getConditionPropertyAtom(
+  'isBulkRegenerateButtonShown'
+);
+export const isBulkRegenerateButtonLimitedAtom = getConditionPropertyAtom(
+  'isBulkRegenerateButtonLimited'
+);
