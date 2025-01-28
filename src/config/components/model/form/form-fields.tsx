@@ -1,6 +1,6 @@
-import { JotaiFieldSelect } from '@/components/jotai';
 import { getConditionPropertyAtom } from '@/config/states/plugin';
 import { t } from '@/lib/i18n';
+import { JotaiFieldSelect } from '@konomi-app/kintone-utilities-jotai';
 import { Skeleton } from '@mui/material';
 import { useAtom } from 'jotai';
 import { FC, memo, Suspense } from 'react';
