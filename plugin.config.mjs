@@ -23,7 +23,7 @@ export default /** @type { const } */ ({
   manifest: {
     base: {
       manifest_version: 1,
-      version: '1.0.1',
+      version: '1.0.4',
       type: 'APP',
       name: {
         en: 'kintone-plugin-template',
