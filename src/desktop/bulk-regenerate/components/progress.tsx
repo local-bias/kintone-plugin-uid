@@ -1,10 +1,12 @@
 import { useAtomValue } from 'jotai';
 import { type FC } from 'react';
 import { processedRecordsLengthAtom, recordsAtom } from '../states';
+import { useCondition } from './condition-context';
 
 const Component: FC = () => {
-  const records = useAtomValue(recordsAtom);
-  const processedRecords = useAtomValue(processedRecordsLengthAtom);
+  const { condition } = useCondition();
+  const records = useAtomValue(recordsAtom(condition.id));
+  const processedRecords = useAtomValue(processedRecordsLengthAtom(condition.id));
 
   return (
     <div
