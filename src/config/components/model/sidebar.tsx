@@ -1,5 +1,5 @@
 import { appFieldsAtom } from '@/config/states/kintone';
-import { conditionsAtom, selectedConditionIdAtom } from '@/config/states/plugin';
+import { pluginConditionsAtom, selectedConditionIdAtom } from '@/config/states/plugin';
 import { getNewCondition, isPluginConditionMet, PluginCondition } from '@/lib/plugin';
 import { BundledSidebar } from '@konomi-app/kintone-utilities-react';
 import { useAtom, useAtomValue } from 'jotai';
@@ -27,7 +27,7 @@ const Label: FC<{ condition: PluginCondition; index: number }> = ({ condition, i
 
 const Sidebar: FC = () => {
   const { enqueueSnackbar } = useSnackbar();
-  const [conditions, setConditions] = useAtom(conditionsAtom);
+  const [conditions, setConditions] = useAtom(pluginConditionsAtom);
   const [selectedConditionId, setSelectedConditionId] = useAtom(selectedConditionIdAtom);
   const label = (params: { condition: PluginCondition; index: number }) => <Label {...params} />;
 
